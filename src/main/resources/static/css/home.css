@@ -1,0 +1,370 @@
+/* 기본 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+body, html {
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    background-color: #121212; /* 배경색을 더 어두운 색으로 조정 */
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #1f1f1f; /* 조금 더 밝은 회색으로 조정 */
+    padding: 10px 0;
+    border-bottom: 1px solid #444;
+}
+
+.navbar button {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.navbar button:hover {
+    color: #f8f9fa;
+}
+
+.content {
+    display: flex;
+    flex: 1;
+    padding: 20px;
+    border: 1px solid #444;
+}
+
+.main, .sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid #444;
+    width: 70%;
+}
+
+.main {
+    border-right: 1px solid #444;
+    flex: 1;
+    justify-content: flex-start; /* Align children at the top */
+}
+
+.sidebar {
+    width: 30%;
+    overflow-y: auto;
+
+}
+
+.sidebar ul {
+    display: block; /* 수직 정렬을 위해 display를 block으로 변경 */
+    width: 100%;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar ul li {
+    width: 100%; /* li 요소들이 전체 너비를 차지하도록 설정 */
+    margin: 5px 0; /* li 요소들 사이에 수직 여백 추가 */
+    padding: 10px;
+    border: 1px solid #ffffff;
+    background: none;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 추가 */
+    max-height: calc(100vh - 225px); /* 고정 높이 설정 (원하는 크기로 조정) */
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.chat-box {
+    flex: 1;
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    background-color: #2b2b2b; /* 채팅 박스 배경색 추가 */
+    max-height: calc(100vh - 225px); /* 고정 높이 설정 (원하는 크기로 조정) */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.chat-box::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.chat-box {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.message-input {
+    display: flex;
+    width: 98%;
+    margin: 10px;
+}
+
+.message-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background-color: #2b2b2b;
+    color: #fff;
+}
+
+.message-input button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.message-input button:hover {
+    background-color: #45a049;
+}
+
+.rooms, .invitation-section, .search-bar {
+    width: 100%;
+    padding: 20px;
+}
+
+.rooms h2, .invitation-section h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #fff;
+}
+
+.rooms button, .invitation-section button {
+    width: 45%;
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ffffff;
+    background: none;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.rooms button {
+    font-size: x-large;
+}
+.rooms button:hover, .invitation-section button:hover {
+    background-color: #444; /* 더 어두운 색으로 변경 */
+}
+
+#chat-room-list, #invitation-list {
+    list-style: none;
+    padding: 0;
+}
+
+#chat-room-list li, #invitation-list li {
+    margin: 5px 0; /* li 요소들 사이에 수직 여백 추가 */
+    padding: 10px; /* 버튼과 동일한 패딩 */
+    border: 1px solid #ffffff; /* 버튼과 동일한 테두리 */
+    background: none; /* 버튼과 동일한 배경 */
+    color: #ffffff; /* 버튼과 동일한 텍스트 색상 */
+    cursor: pointer; /* 포인터 커서 */
+    border-radius: 4px; /* 버튼과 동일한 테두리 반경 */
+    transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 */
+}
+
+#chat-room-list li.current-room {
+    background-color: #4CAF50; /* 현재 선택된 방의 배경색 */
+    color: #000; /* 선택된 방의 글자색 */
+}
+
+#chat-room-list li:hover, #invitation-list li:hover {
+    background-color: #444; /* 호버 시 배경색 */
+    color: #fff; /* 호버 시 글자색 */
+}
+
+.search-bar {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background-color: #2b2b2b;
+    color: #fff;
+}
+.user-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 20px;
+    justify-content: center; /* 중앙 정렬 */
+}
+
+.card {
+    background-color: #444; /* 카드 배경색 수정 */
+    border: 1px solid #555;
+    border-radius: 8px; /* 모서리 반경 수정 */
+    padding: 10px;
+    width: 100%; /* 카드 너비 설정 */
+    max-width: 300px; /* 최대 너비 설정 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* 그림자 효과 */
+    transition: transform 0.2s, background-color 0.3s; /* 부드러운 전환 효과 */
+}
+
+.card:hover {
+    background-color: #555; /* 호버 시 배경색 수정 */
+    transform: scale(1.05); /* 호버 시 확대 효과 */
+    cursor: pointer;
+}
+
+.card .header {
+    font-weight: bold;
+    color: #fff; /* 헤더 텍스트 색상 */
+    font-size: 1.2em; /* 헤더 텍스트 크기 */
+    width: 80%; /* 사이드바보다 80%로 설정 */
+    margin-bottom: 10px; /* 아래 여백 추가 */
+}
+
+.card .body {
+    color: #ddd; /* 본문 텍스트 색상 수정 */
+    font-size: 1em; /* 본문 텍스트 크기 */
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* 추가 CSS */
+ul {
+    display: flex;
+    padding: 0;
+    list-style: none;
+}
+
+ul li {
+    margin-right: 10px;
+}
+
+ul li button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px;
+}
+
+#auth-button {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+
+#auth-button i {
+    margin-right: 5px;
+}
+
+/* 팝업 스타일 추가 */
+.popup-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #282828;
+    color: #ffffff;
+}
+
+.popup-container h1 {
+    margin-bottom: 20px;
+}
+
+#room-list {
+    list-style: none;
+    padding: 0;
+    width: 80%; /* 너비 설정 */
+    margin: 0 auto; /* 중앙 정렬 */
+    display: flex; /* Flexbox 사용 */
+    flex-direction: column; /* 수직 정렬 */
+    align-items: center; /* 중앙 정렬 */
+}
+
+.room-item {
+    width: 100%; /* 전체 너비 설정 */
+    margin: 10px 0; /* 상하 여백 추가 */
+    padding: 10px;
+    border: 1px solid #ffffff;
+    background: none;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+.room-item:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+/* 메시지 및 날짜 스타일 */
+.my-message {
+    align-self: flex-end;
+    background-color: yellow;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+.their-message {
+    align-self: flex-start;
+    background-color: lightblue;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+.my-date {
+    align-self: flex-end;
+    color: gray;
+    font-size: 0.8em;
+    margin-bottom: 15px;
+}
+
+.their-date {
+    align-self: flex-start;
+    color: gray;
+    font-size: 0.8em;
+    margin-bottom: 15px;
+}

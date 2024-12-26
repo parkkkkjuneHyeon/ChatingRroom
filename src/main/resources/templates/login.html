@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Chat App</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+<div class="login-container">
+    <form id="login-form" class="login-form" action="/login" method="POST">
+        <h1>채팅방입니다.<br> 로그인을 해주세요!</h1>
+        <label for="email">이메일</label>
+        <input type="text" id="email" name="email" required>
+        <label for="password">패스워드</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit" id="submit">로그인</button>
+        <button type="button" class="signup-btn" id="signup-btn">회원 가입</button>
+    </form>
+    <div class="oauth-buttons">
+        <img src="/images/naver-logo.png" alt="네이버 로그인" class="oauth-btn" id="naver-login">
+        <img src="/images/kakao-logo.png" alt="카카오 로그인" class="oauth-btn" id="kakao-login">
+        <img src="/images/google-logo.png" alt="구글 로그인" class="oauth-btn" id="google-login">
+    </div>
+</div>
+<script th:inline="javascript">
+    window.onload = function() {
+        const errorMessage = /*[[${error}]]*/ 'null';
+        console.log(errorMessage);
+        if (errorMessage && errorMessage !== 'null') {
+            alert(errorMessage);
+        }
+    };
+</script>
+<script src="/js/login.js"></script>
+</body>
+</html>

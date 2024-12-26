@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>홈페이지</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar">
+        <ul>
+            <li><button id="room-button"><i class="fas fa-home"></i></button></li>
+            <li><button id="search-button"><i class="fas fa-search"></i></button></li>
+            <li><button id="invitation-button"><i class="fas fa-envelope"></i></button></li>
+            <li><button id="auth-button"><i class="fas"></i> <span id="auth-text"></span></button></li>
+        </ul>
+    </nav>
+    <div class="content">
+        <div class="main">
+            <div class="chat-container">
+                <div id="chat-box" class="chat-box">
+                    <!-- 채팅 내용 -->
+                </div>
+                <div class="message-input">
+                    <input type="text" id="message" placeholder="메시지 입력">
+                    <button type="submit" id="send-btn">입력</button>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar" id="sidebar">
+            <!-- 사이드바 내용 -->
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="css/home.css">
+<script defer src="js/home.js"></script>
+</body>
+</html>

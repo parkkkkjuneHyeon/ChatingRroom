@@ -1,0 +1,89 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    background-color: #000000; /* 연한 파랑색 배경 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.signup-container, .login-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.signup-form, .login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-form h1, .login-form h1 {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.signup-form label, .login-form label {
+    margin-bottom: 0.5rem;
+}
+
+.signup-form input, .login-form input {
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: calc(100% - 10px);
+    box-sizing: border-box;
+}
+
+.signup-form select {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.signup-form button, .login-form button {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.email-container {
+    display: flex;
+    align-items: center;
+}
+
+.email-container input {
+    flex: 1;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#password-message {
+    font-size: 0.9rem;
+    color: red;
+}
+
+.gender-container {
+    display: flex;
+    align-items: center;
+}
+
+.gender-container label {
+    margin-right: 10px;
+}
+
+.gender-container input {
+    margin-right: 15px;
+}

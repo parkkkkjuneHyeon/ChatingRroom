@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Chat App</title>
+    <link rel="stylesheet" href="/css/signup.css">
+</head>
+<body>
+<div class="signup-container">
+    <form id="signup-form" class="signup-form" action="/signup" method="POST">
+        <h1>회원 가입</h1>
+        <label for="email-user">이메일</label>
+        <div class="email-container">
+            <input type="text" id="email-user" name="emailUser" required>
+            <input type="text" id="email-domain-input" name="emailDomainInput" readonly required>
+        </div>
+        <select id="email-domain" name="emailDomain" onchange="handleDomainChange()">
+            <option value="">이메일 선택</option>
+            <option value="naver.com">@naver.com</option>
+            <option value="gmail.com">@gmail.com</option>
+            <option value="daum.net">@daum.net</option>
+            <option value="custom">직접 입력</option>
+        </select>
+        <input type="hidden" id="email" name="email">
+        <label for="password">패스워드</label>
+        <input type="password" id="password" name="password" required>
+        <label for="confirm-password">패스워드 확인</label>
+        <div class="password-confirmation">
+            <input type="password" id="confirm-password" name="confirm-password" required>
+        </div>
+        <span id="password-message"></span>
+        <label for="name">이름</label>
+        <input type="text" id="name" name="name" required>
+        <label for="age">나이</label>
+        <input type="number" id="age" name="age">
+        <label>성별</label>
+        <div class="gender-container">
+            <label for="male">남</label>
+            <input type="radio" id="male" name="gender" value="남" required>
+            <label for="female">여</label>
+            <input type="radio" id="female" name="gender" value="여" required>
+        </div>
+        <button type="submit">회원 가입</button>
+    </form>
+</div>
+<script src="/js/signup.js"></script>
+</body>
+</html>
