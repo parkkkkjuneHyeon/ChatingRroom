@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Objects;
+
 
 @Getter
 @Component
@@ -52,7 +54,11 @@ public class GoogleClient implements OauthClient {
                 .get(getURI(googleClientProperties.getUserInfoUri()))
                 .header(
                         HttpHeaders.AUTHORIZATION,
-                        bearer+tokenResponse.getBody().getAccessToken())
+                        bearer
+                                + Objects.requireNonNull(
+                                        tokenResponse.getBody()
+                                ).getAccessToken()
+                )
                 .build();
 
         System.out.println(bearer+tokenResponse.getBody().getAccessToken());
