@@ -69,7 +69,6 @@ public class GoogleClient implements OauthClient {
         var member = Member.builder()
                 .email(userInfo.getEmail())
                 .name(userInfo.getName())
-                .password("1234")
                 .build();
 
         return ClientTokenDto.Response.builder()

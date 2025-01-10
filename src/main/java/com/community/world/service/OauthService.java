@@ -10,6 +10,7 @@ import com.community.world.dto.member.MemberDto;
 import com.community.world.repository.MemberRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,15 +19,18 @@ public class OauthService {
     private final ClientStrategy clientStrategy;
     private final MemberRepository memberRepository;
     private final TokenService tokenService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public OauthService(
             ClientStrategy clientStrategy,
             MemberRepository memberRepository,
-            TokenService tokenService
+            TokenService tokenService,
+            BCryptPasswordEncoder bCryptPasswordEncoder
             ) {
         this.clientStrategy = clientStrategy;
         this.memberRepository = memberRepository;
         this.tokenService = tokenService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     private static final Logger log = LoggerFactory
@@ -49,7 +53,9 @@ public class OauthService {
         //구글에서 가져온 사용자 정보를 가지고 새로운 jwt토큰을 만들어서 전달
         var token = tokenService
                 .generateToken(MemberDto.Response.getMemberResponse(member));
-        
+
+        member.setPassword(bCryptPasswordEncoder.encode(token));
+
         if(memberRepository.findByEmail(member.getEmail()).isEmpty()) {
             member = memberRepository.save(member);
         }
