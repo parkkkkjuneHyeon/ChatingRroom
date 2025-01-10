@@ -14,10 +14,8 @@ public class RoomKey {
         return Base64
                 .getEncoder()
                 .encodeToString(
-                        new String(
-                                ""+memberEmail
-                                        +LocalDateTime.now()
-                        ).getBytes(StandardCharsets.UTF_8)
+                        (memberEmail
+                                + LocalDateTime.now()).getBytes(StandardCharsets.UTF_8)
                 );
     }
 }
