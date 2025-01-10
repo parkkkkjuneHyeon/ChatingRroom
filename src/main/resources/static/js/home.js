@@ -3,6 +3,73 @@ document.addEventListener('DOMContentLoaded', function () {
     const roomButton = document.getElementById('room-button');
     const searchButton = document.getElementById('search-button');
     const invitationButton = document.getElementById('invitation-button');
+    let stompClient;
+    let currentSubscription = null;
+    let isComposing = false;
+    const messageInput = document.getElementById('message');
+
+    // IME 조합으로 인하여 엔터를 누를 시 한글은 메시지를 두번 보내게되는 문제가 생김
+    messageInput.addEventListener('compositionstart', function () {
+        isComposing = true;
+        console.log(`isComposing true ? : ${isComposing}`)
+    });
+
+    // 조합 끝날 때
+    messageInput.addEventListener('compositionend', function () {
+        isComposing = false;
+        console.log(`isComposing false ? : ${isComposing}`)
+    });
+
+    connectSocket();
+
+    function subscribeToRoom(roomKey) {
+        if (currentSubscription) {
+            currentSubscription.unsubscribe();
+            currentSubscription = null;
+        }
+
+        if (stompClient && stompClient.connected) {
+            currentSubscription = stompClient.subscribe(`/topic/messages/${roomKey}`, function(messageOutput) {
+                try {
+                    const message = JSON.parse(messageOutput.body);
+                    showMessage(message);
+                } catch (e) {
+                    console.error('Invalid JSON received:', messageOutput.body);
+                }
+            });
+        } else {
+            console.error('STOMP client is not connected.');
+        }
+    }
+
+    function connectSocket() {
+        if (stompClient && stompClient.connected) {
+            return; // 이미 연결되어 있다면 재연결하지 않음
+        }
+        let socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+        //로그내용을 안보여주기위한 내용
+        stompClient.debug = function() {};
+        let token = localStorage.getItem('jwt');
+
+        stompClient.connect({ 'Authorization': `Bearer ` + token }, function(frame) {
+            // console.log('Connected: ' + frame);
+        }, function(error) {
+            console.error('STOMP error:', error);
+        });
+    }
+
+
+
+    function getCurrentChatingName() {
+        let chatingNameElement = document.querySelector('#chat-room-list li.current-room');
+        return chatingNameElement ? chatingNameElement.getAttribute('data-chating-name') : null;
+    }
+
+    function getCurrentRoomKey() {
+        let currentRoomElement = document.querySelector('#chat-room-list li.current-room');
+        return currentRoomElement ? currentRoomElement.getAttribute('data-room-key') : null;
+    }
 
     // 버튼 클릭 이벤트 리스너 추가
     roomButton.addEventListener('click', function () {
@@ -119,7 +186,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     previousSelected.classList.remove('current-room');
                 }
                 item.classList.add('current-room');
-                loadMessages(item.getAttribute('data-room-key'));
+                let roomKey = item.getAttribute('data-room-key')
+
+                loadMessages(roomKey);
+                subscribeToRoom(roomKey); // 새로운 방에 구독
             });
         });
 
@@ -353,50 +423,23 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    function getCurrentChatingName() {
-        let chatingNameElement = document.querySelector('#chat-room-list li.current-room');
-        return chatingNameElement ? chatingNameElement.getAttribute('data-chating-name') : null;
-    }
 
-    function getCurrentRoomKey() {
-        let currentRoomElement = document.querySelector('#chat-room-list li.current-room');
-        return currentRoomElement ? currentRoomElement.getAttribute('data-room-key') : null;
-    }
-
-    function connectSocket() {
-        let socket = new SockJS('/ws');
-        let stompClient = Stomp.over(socket);
-        let token = localStorage.getItem('jwt');
-
-        stompClient.connect({ 'Authorization': `Bearer `+ token }, function(frame) {
-            console.log('Connected: ' + frame);
-
-            stompClient.subscribe('/topic/messages', function(messageOutput) {
-                showMessage(JSON.parse(messageOutput.body));
-            });
-        });
-
-        return stompClient;
-    }
-
-    let stompClient = connectSocket();
 
     document.getElementById('send-btn').addEventListener('click', sendMessage);
 
     document.getElementById('message').addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
-            event.preventDefault();
-            document.getElementById('send-btn').click();
+            sendMessage();
         }
     });
 
     function sendMessage() {
         let chatingName = getCurrentChatingName();
-        let messageContent = document.getElementById('message').value;
+        let messageContent = document.getElementById('message').value.trim();
         let roomKey = getCurrentRoomKey();
         let token = localStorage.getItem('jwt');
 
-        if (messageContent && stompClient) {
+        if (messageContent && stompClient && !isComposing) {
             let chatMessage = {
                 chatingRoomName: chatingName,
                 chatingRoomKey: roomKey,
@@ -404,9 +447,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 accessToken: token
 
             };
-            stompClient.send("/app/send-Message",{ 'Authorization': `Bearer `+ token }, JSON.stringify(chatMessage));
             document.getElementById('message').value = '';
+            // console.log('Sending message:', chatMessage); // 디버깅용 로그
+            stompClient.send("/app/send-message",{ 'Authorization': `Bearer `+ token }, JSON.stringify(chatMessage));
         }
+
     }
 
     function showMessage(message) {
@@ -436,7 +481,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function loadMessages(roomKey) {
         let token = localStorage.getItem('jwt');
 
-        fetch('/search-Messages', {
+        fetch('/search-messages', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
