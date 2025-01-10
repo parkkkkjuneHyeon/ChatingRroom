@@ -14,6 +14,8 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Slf4j
 @Component
 public class StompHandler implements ChannelInterceptor {
@@ -36,7 +38,7 @@ public class StompHandler implements ChannelInterceptor {
         log.info("preSend 진입 : {}", accessor.getFirstNativeHeader(AUTHORIZATION));
         if(StompCommand.CONNECT.equals(accessor.getCommand())) {
             String authorization = accessor.getFirstNativeHeader(AUTHORIZATION);
-            String accessToken = authorization.substring(BEARER_PREFIX.length());
+            String accessToken = Objects.requireNonNull(authorization).substring(BEARER_PREFIX.length());
 
             String memberEmail = tokenService.getSubject(accessToken);
             var userDetails = memberApiService.loadUserByUsername(memberEmail);
