@@ -65,8 +65,6 @@ public class KakaoClient implements OauthClient {
                 )
                 .build();
 
-        System.out.println(bearer+tokenResponse.getBody().getAccessToken());
-
         ResponseEntity<KakaoDto.Response> userResponse =
                 restTemplate.exchange(userRequest, KakaoDto.Response.class);
         var userInfo = userResponse.getBody().getUser();

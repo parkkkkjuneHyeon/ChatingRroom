@@ -61,8 +61,6 @@ public class GoogleClient implements OauthClient {
                 )
                 .build();
 
-        System.out.println(bearer+tokenResponse.getBody().getAccessToken());
-
         ResponseEntity<GoogleDto.Response> userResponse =
                 restTemplate.exchange(userRequest, GoogleDto.Response.class);
         var userInfo = userResponse.getBody();
