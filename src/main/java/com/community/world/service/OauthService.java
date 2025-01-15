@@ -58,6 +58,10 @@ public class OauthService {
 
         if(memberRepository.findByEmail(member.getEmail()).isEmpty()) {
             member = memberRepository.save(member);
+        }else {
+            var memberEntity = memberRepository.findByEmail(member.getEmail()).get();
+            memberEntity.setPassword(member.getPassword());
+            memberRepository.save(memberEntity);
         }
 
         return TokenDto.Response.builder()
