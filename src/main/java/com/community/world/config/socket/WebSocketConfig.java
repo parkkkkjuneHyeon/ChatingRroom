@@ -33,6 +33,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         //Opening Handshake가 끝나면 ws로 프로토콜을 변환하여 커넥션을 맺음.
         //WebSocket을 지원하지 않은 브라우저에서도 동작할 수 있게함.
         registry.addEndpoint("/ws")
+                .setAllowedOrigins("*")
                 .withSockJS();
     }
 
