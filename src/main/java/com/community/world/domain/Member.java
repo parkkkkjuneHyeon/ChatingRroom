@@ -66,7 +66,7 @@ public class Member implements UserDetails {
     }
     @PreUpdate
     public void PreUpdate() {
-        this.createAt = ZonedDateTime.now();
+        this.updateAt = ZonedDateTime.now();
     }
 
     @OneToMany(
