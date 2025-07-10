@@ -27,7 +27,7 @@
 | 💬 채팅     | WebSocket + STOMP 기반 실시간 채팅 |
 | 🔑 채팅방   | 고유 roomKey 기반 채팅방 생성 / 입장 제어 |
 | 👥 초대     | 사용자 초대 기능 (roomKey + targetUserId) |
-| 🧭 사용자 토픽 | 사용자 ID 기반 동적 topic 구독 (/topic/user.{userId}) |
+| 🧭 사용자 토픽 | 사용자 ID 기반 동적 topic 구독 (/topic/messages/${roomKey}) |
 | ✅ 접근 제어 | 인증된 사용자만 채팅방 입장 가능 |
 | 🔄 세션 관리 | WebSocket 연결/종료 감지 및 상태 관리 |
 
