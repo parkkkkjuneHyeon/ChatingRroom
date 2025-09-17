@@ -91,7 +91,9 @@ public class MemberApiService implements UserDetailsService {
                 .orElseThrow(() ->
                         new MemberException(LOGIN_ERROR)
                 );
-        member.setPassword(request.getUpdatePassword());
+        member.setPassword(
+                bCryptPasswordEncoder.encode(request.getUpdatePassword()));
+        member.setUpdateAt(java.time.ZonedDateTime.now());
         memberRepository.save(member);
     }
 
